@@ -1,7 +1,9 @@
 import { uploadPhoto, createUser } from './utils';
 
 export default function handleProfileSignup() {
-  Promise.all([uploadPhoto(), createUser(), Promise.reject()])
+  const promise1 = uploadPhoto();
+  const promise2 = createUser();
+  Promise.all([promise1, promise2])
     .then((values) => {
       let obj = {};
       for (const item of values) {
@@ -9,7 +11,5 @@ export default function handleProfileSignup() {
       }
       console.log(obj.body, obj.firstName, obj.lastName);
     })
-    .catch(() => console.error('Signup system offline'));
+    .catch(() => console.log('Signup system offline'));
 }
-
-handleProfileSignup();
