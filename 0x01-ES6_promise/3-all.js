@@ -4,7 +4,7 @@ export default function handleProfileSignup() {
   const promise1 = uploadPhoto();
   const promise2 = createUser();
 
-  return Promise.all([promise1, promise2])
+  Promise.all([promise1, promise2])
     .then((values) => {
       let obj = {};
       for (const item of values) {
