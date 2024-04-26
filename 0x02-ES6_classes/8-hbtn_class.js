@@ -1,5 +1,5 @@
 export default class HolbertonClass {
-  constructor(size, location) {
+  constructor(size = 0, location = '') {
     this._size = size;
     this._location = location;
   }
@@ -20,7 +20,3 @@ export default class HolbertonClass {
     return this._location;
   }
 }
-
-const hc = new HolbertonClass(12, 'Mezzanine');
-console.log(String(hc));
-console.log(Number(hc));
