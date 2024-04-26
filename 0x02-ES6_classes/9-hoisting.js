@@ -31,7 +31,7 @@ export class StudentHolberton {
   }
 
   get fullStudentDescription() {
-    return `${this._firstName} ${this._lastName} - ${this._holbertonClass.year} - ${this._holbertonClass.location}`;
+    return `${this.fullName} - ${this._holbertonClass.year} - ${this._holbertonClass.location}`;
   }
 }
 
@@ -48,11 +48,3 @@ export const listOfStudents = [
   student4,
   student5,
 ];
-
-console.log(listOfStudents);
-
-const listPrinted = listOfStudents.map(
-  (student) => student.fullStudentDescription,
-);
-
-console.log(listPrinted);
