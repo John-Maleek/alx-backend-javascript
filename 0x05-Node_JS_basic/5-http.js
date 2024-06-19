@@ -1,24 +1,33 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable implicit-arrow-linebreak */
 /* eslint-disable comma-dangle */
-const process = require('process');
 const http = require('http');
 const fs = require('fs');
+
+if (process.argv.length < 3) {
+  throw new Error(
+    'name of the database must be passed as argument of the file'
+  );
+}
 
 function getList(studentArray) {
   return studentArray.map((str) => str.split(',')[0]).join(', ');
 }
 
 const countStudents = (path) =>
-  new Promise((res, rej) => {
-    fs.promises.readFile(path, 'utf-8', async (err, data) => {
+  new Promise((resolve, reject) => {
+    fs.readFile(path, 'utf-8', (err, data) => {
       if (err) {
-        throw new Error('Cannot load the database');
+        reject(new Error('Cannot load the database'));
       }
 
-      const lines = await data.split('\n').splice(1);
-      const CSStudents = lines.filter((str) => str.includes('CS'));
-      const SWEStudents = lines.filter((str) => str.includes('SWE'));
+      const lines = data.split('\n').splice(1);
+      const CSStudents = lines.filter(
+        (str) => str.includes('CS') && str.split(',').length === 4
+      );
+      const SWEStudents = lines.filter(
+        (str) => str.includes('SWE') && str.split(',').length === 4
+      );
 
       console.log(`Number of students: ${lines.length}`);
       console.log(
@@ -31,6 +40,13 @@ const countStudents = (path) =>
           SWEStudents
         )}`
       );
+      resolve({
+        msg: `Number of students: ${lines.length}\nNumber of students in CS: ${
+          CSStudents.length
+        }. List: ${getList(CSStudents)}\nNumber of students in SWE: ${
+          SWEStudents.length
+        }. List: ${getList(SWEStudents)}`,
+      });
     });
   });
 
@@ -38,11 +54,15 @@ const hostname = '127.0.0.1';
 const port = 1245;
 
 const app = http.createServer((req, res) => {
+  res.writeHead(200, { 'Content-Type': 'text/plain' });
+
   switch (req.url) {
     case '/students': {
-      res.end(
-        `This is the list of our students\n ${countStudents(process.argv[2])}`
-      );
+      countStudents(process.argv[2])
+        .then((resp) => {
+          res.end(`This is the list of our students\n${resp.msg}`);
+        })
+        .catch((err) => console.log(err));
       break;
     }
     default:
@@ -51,7 +71,7 @@ const app = http.createServer((req, res) => {
 });
 
 app.listen(port, hostname, () => {
-  console.log('Listening to requests on port 1245');
+  console.log(`Server running at http://localhost:${port}`);
 });
 
 module.exports = app;

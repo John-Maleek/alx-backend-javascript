@@ -7,7 +7,7 @@ function getList(studentArray) {
   return studentArray.map((str) => str.split(',')[0]).join(', ');
 }
 
-const countStudents = (path) =>
+const readDatabase = (path) =>
   new Promise((resolve, reject) => {
     fs.readFile(path, 'utf-8', (err, data) => {
       if (err) {
@@ -22,29 +22,11 @@ const countStudents = (path) =>
         (str) => str.includes('SWE') && str.split(',').length === 4
       );
 
-      console.log(`Number of students: ${lines.length}`);
-      console.log(
-        `Number of students in CS: ${CSStudents.length}. List: ${getList(
-          CSStudents
-        )}`
-      );
-      console.log(
-        `Number of students in SWE: ${SWEStudents.length}. List: ${getList(
-          SWEStudents
-        )}`
-      );
-
       resolve({
-        totalStudents: lines.length,
-        CSStudents,
-        SWEStudents,
-        msg: `Number of students: ${lines.length}\nNumber of students in CS: ${
-          CSStudents.length
-        }. List: ${getList(CSStudents)}\nNumber of students in SWE: ${
-          SWEStudents.length
-        }. List: ${getList(SWEStudents)}`,
+        CS: getList(CSStudents).split(','),
+        SWE: getList(SWEStudents).split(','),
       });
     });
   });
 
-module.exports = countStudents;
+export default readDatabase;
