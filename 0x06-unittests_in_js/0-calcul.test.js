@@ -21,4 +21,13 @@ describe('calculates number', function () {
   it('expects -2 + 4 = 2', function () {
     assert.equal(calculateNumber(-2, -4), -6);
   });
+  it('should be 2.6 + -4.7 = -2', function () {
+    assert.equal(calculateNumber(2.6, -4.7), -2);
+  });
+  it('should be -2 + 4 = 2', function () {
+    assert.equal(calculateNumber(-2, 4), 2);
+  });
+  it('should be -2.5 + -7.5 = -9', function () {
+    assert.equal(calculateNumber(-2.5, -7.5), -9);
+  });
 });
