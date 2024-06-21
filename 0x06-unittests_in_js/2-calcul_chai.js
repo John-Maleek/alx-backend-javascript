@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 function calculateNumber(type, a, b) {
   if (type === 'SUM') {
     return Math.round(a) + Math.round(b);
@@ -6,9 +7,11 @@ function calculateNumber(type, a, b) {
     return Math.round(a) - Math.round(b);
   }
   if (type === 'DIVIDE') {
-    return b === 0 ? 'Error' : Math.round(a) / Math.round(b);
+    if (b === 0) {
+      return 'Error';
+    }
+    return Math.round(a) / Math.round(b);
   }
-  return 'Error';
 }
 
 module.exports = calculateNumber;
