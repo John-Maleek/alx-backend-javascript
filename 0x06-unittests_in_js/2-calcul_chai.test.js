@@ -1,3 +1,7 @@
+/* eslint-disable jest/prefer-expect-assertions */
+/* eslint-disable jest/valid-expect */
+/* eslint-disable prefer-arrow-callback */
+/* eslint-disable func-names */
 const chai = require('chai');
 const calculateNumber = require('./2-calcul_chai');
 

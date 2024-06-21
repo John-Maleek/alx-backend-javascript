@@ -8,7 +8,7 @@ const sendPaymentRequestToApi = require('./3-payment');
 const Utils = require('./utils');
 
 describe('sendPaymentRequestToApi', () => {
-  it('Testing...', () => {
+  it('testing...', () => {
     const calculateNumberSpy = sinon.stub(Utils, 'calculateNumber').returns(10);
     const consoleLogSpy = sinon.spy(console, 'log');
 
